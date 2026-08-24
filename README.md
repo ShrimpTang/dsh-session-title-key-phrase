@@ -12,14 +12,28 @@
   60 UTF-8 字节并加省略号。
 - 只对新会话生效，已有会话不追溯改名。
 
-## 挂载方式
+## 安装与挂载
 
-在 `~/.dsh/cordis.patch.yml` 追加一行（`name` 用本包 `lib/index.js` 的绝对路径）：
+推荐直接从 Git 仓库安装到 DSH 的插件目录（`name` 指向安装后的 `lib/index.js`）：
+
+```bash
+# 安装（任选一处持久目录，例如 DSH 插件目录）
+git clone https://github.com/ShrimpTang/dsh-session-title-key-phrase.git \
+  ~/.dsh/plugins/dsh-session-title-key-phrase
+```
+
+在 `~/.dsh/cordis.patch.yml` 追加：
 
 ```yaml
 - insert:
     - id: session-title-key-phrase
-      name: '/Users/shrimp/WebstormProjects/dsh-session-title-key-phrase/lib/index.js'
+      name: '/Users/shrimp/.dsh/plugins/dsh-session-title-key-phrase/lib/index.js'
+```
+
+然后重启 DSH 进程生效。更新插件：
+
+```bash
+cd ~/.dsh/plugins/dsh-session-title-key-phrase && git pull
 ```
 
 然后重启 DSH 进程生效。注意：DSH 内置的 `session-title-llm`
