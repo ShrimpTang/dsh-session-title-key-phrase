@@ -1,0 +1,15 @@
+{
+  "name": "dsh-session-title-key-phrase",
+  "description": "Name each session after a key phrase extracted from its first human question",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js"
+  ],
+  "license": "MIT"
+}
