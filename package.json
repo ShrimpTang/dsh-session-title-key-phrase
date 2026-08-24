@@ -1,15 +1,40 @@
 {
   "name": "dsh-session-title-key-phrase",
-  "description": "Name each session after a key phrase extracted from its first human question",
   "version": "0.1.0",
+  "description": "把 DSH 会话默认命名为该会话第一条提问提炼出的关键句。Name each DSH session after a key phrase extracted from its first human question.",
   "type": "module",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
   "exports": {
-    ".": "./lib/index.js",
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
   "files": [
-    "lib/index.js"
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "dsh-plugin",
+    "dsh-bundle",
+    "session-title"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": "^20.0.0 || >=22.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShrimpTang/dsh-session-title-key-phrase.git"
+  }
 }

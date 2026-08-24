@@ -1,0 +1,10 @@
+# dsh-session-title-key-phrase bundle patch: mount the host-side session
+# titler.
+#
+# Applied when this bundle appears in a profile's dsh.profile.bundles list.
+# Listens for each session's first human `user/message` and commits the
+# extracted key phrase through ctx.sessionTitle.rename().
+
+- insert:
+    - id: session-title-key-phrase
+      name: dsh-session-title-key-phrase

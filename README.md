@@ -8,45 +8,41 @@
   `ctx.sessionTitle.rename()` 写入（`user` 来源，固定标题，取代内置 LLM
   自动命名；之后手动改名仍然生效且被尊重）。
 - 关键句提炼：去代码块/引用/斜杠命令/markdown 符号 → 取第一句 → 反复剥掉
-  开头客套词（帮我/请/你看下/我想/能不能…，见 `LEAD_FILLERS`）→ 截断到
-  60 UTF-8 字节并加省略号。
+  开头客套词（帮我/请/你看下/我想/能不能…，见 `lib/index.js` 的
+  `LEAD_FILLERS`）→ 截断到 60 UTF-8 字节并加省略号。
 - 只对新会话生效，已有会话不追溯改名。
 
-## 安装与挂载
-
-推荐直接从 Git 仓库安装到 DSH 的插件目录（`name` 指向安装后的 `lib/index.js`）：
+## 安装
 
 ```bash
-# 安装（任选一处持久目录，例如 DSH 插件目录）
-git clone https://github.com/ShrimpTang/dsh-session-title-key-phrase.git \
-  ~/.dsh/plugins/dsh-session-title-key-phrase
+dsh plugin --profile web add github:ShrimpTang/dsh-session-title-key-phrase
 ```
 
-在 `~/.dsh/cordis.patch.yml` 追加：
-
-```yaml
-- insert:
-    - id: session-title-key-phrase
-      name: '/Users/shrimp/.dsh/plugins/dsh-session-title-key-phrase/lib/index.js'
-```
-
-然后重启 DSH 进程生效。更新插件：
+也可以从本地路径安装（开发模式，`link:` 链接）：
 
 ```bash
-cd ~/.dsh/plugins/dsh-session-title-key-phrase && git pull
+dsh plugin --profile web add /Users/shrimp/WebstormProjects/dsh-session-title-key-phrase
 ```
 
-然后重启 DSH 进程生效。注意：DSH 内置的 `session-title-llm`
-（`@deepseek-ai/dsh-session-title-first-prompt-llm`）也注册了标题 provider；
-本插件走 `rename()` 通道，与它共存并在首条提问时覆盖其结果。若想彻底禁用
-内置 LLM 命名，可在同一 patch 文件再加一行覆盖该行为 disabled：
+安装后把 `dsh-session-title-key-phrase` 加入 `~/.dsh/profiles/web/package.json`
+的 `dsh.profile.bundles` 列表（如安装命令未自动加入），重启 DSH 即生效。
 
-```yaml
-    - id: session-title-llm
-      disabled: true
+## 卸载
+
+```bash
+dsh plugin --profile web remove dsh-session-title-key-phrase
 ```
 
-## 与动态插件版的关系
+## 结构
 
-本包是会话中动态插件 `keyphr-1` 的持久化版本，逻辑一致；两者同时启用时
-后注册者胜出（都通过 rename，结果相同，无冲突）。
+```
+dsh-session-title-key-phrase/
+├── cordis.patch.yml   # Loader 行：向 profile 组合插入本插件
+├── package.json       # dsh.bundle.patch 声明
+└── lib/
+    └── index.js       # Host 半区：监听首条提问并重命名会话
+```
+
+## License
+
+MIT
