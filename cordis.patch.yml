@@ -2,8 +2,14 @@
 # titler.
 #
 # Applied when this bundle appears in a profile's dsh.profile.bundles list.
-# Listens for each session's first human `user/message` and commits the
-# extracted key phrase through ctx.sessionTitle.rename().
+# Registers a sessionTitle provider (`automatic: 'first-prompt'`) that names
+# each session after a key phrase extracted from its first human question.
+#
+# The profile's `session-title-llm` bundle occupies the single provider slot,
+# so disable it in the profile's own cordis.patch.yml and restart the web app
+# for this provider to register:
+#   - id: session-title-llm
+#     disabled: true
 
 - insert:
     - id: session-title-key-phrase
